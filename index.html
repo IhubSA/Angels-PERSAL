@@ -2,10 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Angels PERSAL · People & Payroll Hub</title>
 <meta name="description" content="Angels Resource Centres — PERSAL People & Payroll Hub (test system)">
+<meta name="theme-color" content="#1F4E8C">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Angels PERSAL">
+<link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2216%22%20fill%3D%22%231F4E8C%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2244%22%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2234%22%20font-weight%3D%22800%22%20fill%3D%22%23fff%22%20text-anchor%3D%22middle%22%3EA%3C/text%3E%3C/svg%3E%0A" type="image/svg+xml">
+<link rel="icon" href="icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
@@ -177,25 +185,92 @@ input[type=checkbox],input[type=radio]{width:18px;height:18px;accent-color:var(-
 .search .res a{display:block;padding:9px 12px;text-decoration:none;color:var(--ink);font-size:13px;border-bottom:1px solid var(--line2)}
 .search .res a:hover{background:#F3F7FC}
 
-/* Responsive */
+/* Responsive: tablets and phones */
+html{-webkit-text-size-adjust:100%}
+body{padding-bottom:env(safe-area-inset-bottom)}
+.backdrop{display:none}
+.roleswitch{position:fixed;left:14px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:30;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;box-shadow:0 6px 20px rgba(0,0,0,.08);font-size:12px;max-width:calc(100vw - 28px)}
+.seg{max-width:100%;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}
+.seg::-webkit-scrollbar{display:none}
+.seg button{white-space:nowrap;flex:none}
+.tw{-webkit-overflow-scrolling:touch}
+
+/* Tablets (portrait / small laptops) */
+@media (max-width:1180px){
+  .side{width:224px;padding:16px 10px}
+  .main{padding:22px 20px 60px}
+  .g-2{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+}
+
+/* Phones and tablets in portrait: sliding menu */
 @media (max-width:900px){
-  .side{position:fixed;left:0;top:0;z-index:40;transform:translateX(-100%);transition:transform .2s;box-shadow:0 0 40px rgba(0,0,0,.2)}
+  .side{position:fixed;left:0;top:0;bottom:0;height:100%;z-index:45;width:min(300px,86vw);transform:translateX(-105%);transition:transform .22s ease;box-shadow:0 0 40px rgba(0,0,0,.25);padding-top:calc(16px + env(safe-area-inset-top));padding-bottom:calc(16px + env(safe-area-inset-bottom))}
   .side.open{transform:none}
-  .topbar{display:flex;align-items:center;gap:10px;background:#fff;border-bottom:1px solid var(--line);padding:10px 14px;position:sticky;top:0;z-index:20}
+  .backdrop{display:block;position:fixed;inset:0;background:rgba(22,33,58,.45);z-index:44;opacity:0;pointer-events:none;transition:opacity .2s}
+  .backdrop.on{opacity:1;pointer-events:auto}
+  .side a.nav{padding:12px;font-size:15px}
+  .topbar{display:flex;align-items:center;gap:10px;background:#fff;border-bottom:1px solid var(--line);padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top));position:sticky;top:0;z-index:20}
   .shell{flex-direction:column}
-  .main{padding:18px 14px 50px}
-  .g-2{grid-template-columns:1fr}
-  .g-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .g-3{grid-template-columns:1fr}
+  .main{padding:16px 14px 70px;gap:14px}
+  .g-2,.g-3{grid-template-columns:1fr}
+  .g-tiles{grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:10px}
+  .ph{align-items:flex-start}
+  .ph h1{font-size:22px}
+  .ph p{font-size:13px}
+  .ph>.row{width:100%}
+  .ph>.row .btn{flex:1 1 auto}
+  .h2{font-size:16px}
+  .pad{padding:14px 14px}
+  .filters{padding:12px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+  .flow{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
+  .tile{padding:14px}
+  .tile .v{font-size:24px}
+  .btn{min-height:44px}
+  .btn.sm{min-height:38px}
+  /* 16px inputs stop phones zooming in when you tap a field */
+  .f input,.f select,.f textarea,input.in,select.in,.search input,.whoami select{font-size:16px}
+  .modal-bg{padding:0;align-items:flex-end}
+  .modal{border-radius:18px 18px 0 0;max-height:92vh;display:flex;flex-direction:column}
+  .modal .body{overflow-y:auto;padding:16px}
+  .modal footer{padding:12px 16px calc(12px + env(safe-area-inset-bottom));position:sticky;bottom:0;background:#fff}
+  .modal footer .btn{flex:1}
+  #toasts{left:14px;right:14px;bottom:calc(14px + env(safe-area-inset-bottom))}
+  .toast{max-width:none}
+  .phead .in{padding:12px 16px;padding-top:calc(12px + env(safe-area-inset-top))}
+  .pmain{padding:16px 14px 150px}
+  .demo-bar .hide-sm{display:none}
+}
+
+/* Phones: tables become stacked cards, forms one column */
+@media (max-width:640px){
   .fg,.kv{grid-template-columns:1fr}
-  .ph h1{font-size:23px}
+  .g-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tile .l{font-size:12px}
+  .tile .s{font-size:11px}
+  .tbl thead{display:none}
+  .tbl,.tbl tbody,.tbl tr,.tbl td{display:block;width:100%}
+  .tbl tr{border:1px solid var(--line);border-radius:12px;margin:0 0 10px;padding:6px 12px;background:#fff}
+  .tbl tr.sel{border-color:var(--brand)}
+  .tbl td{border:0!important;padding:6px 0!important;display:flex;gap:12px;justify-content:space-between;align-items:flex-start;text-align:right;white-space:normal!important;min-width:0!important}
+  .tbl td::before{content:attr(data-label);flex:none;max-width:45%;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);padding-top:2px}
+  .tbl td:not([data-label])::before,.tbl td[data-label=""]::before{display:none}
+  .tbl td:not([data-label]),.tbl td[data-label=""]{justify-content:flex-end}
+  .tbl td>*{max-width:100%}
+  .tbl td:first-child{font-size:14px}
+  .tw{overflow:visible}
+  .card[style*="padding:6px 8px"]{padding:8px!important;background:transparent;border:0}
+  .roleswitch{left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom))}
+  .roleswitch select{width:100%}
+  .list-row{flex-wrap:wrap}
+  .ph h1{font-size:20px}
+  .seg button{padding:8px 14px;font-size:13px}
 }
 @media print{.side,.topbar,.demo-bar,.btn{display:none!important}.main{padding:0}}
 
 </style>
 </head>
 <body>
-<div class="demo-bar"><b>Test system</b> · sample data only, saved in this browser · switch roles in the sidebar to test approvals<button onclick="A.resetData()">Reset demo data</button></div>
+<div class="demo-bar"><b>Test system</b><span class="hide-sm"> · sample data only, saved on this device · switch roles in the menu to test approvals</span><button onclick="A.resetData()">Reset demo data</button></div>
 <div id="app"><div class="empty">Loading…</div></div>
 <div id="toasts" aria-live="polite"></div>
 <noscript><p style="padding:20px">Angels PERSAL needs JavaScript to run.</p></noscript>
@@ -889,11 +964,12 @@ input[type=checkbox],input[type=radio]{width:18px;height:18px;accent-color:var(-
         <button class="btn sm" onclick="A.exportData()" title="Download all test data as JSON">Export data</button>
         <button class="btn sm" onclick="A.importData()" title="Load a JSON export">Import</button>
         <button class="btn sm bad" onclick="A.resetData()">Reset demo</button>
-      </div></div>`;
+      </div>${window.Install && Install.available() ? `<button class="btn pri sm" style="width:100%;margin-top:8px" onclick="Install.prompt()">⬇ Install the app</button>` : ''}</div>`;
   }
 
   function render() {
     const { r, params } = parseHash();
+    document.body.style.overflow = '';
     const role = St.S.role;
     document.documentElement.style.setProperty('--brand', St.S.brand || '#1F4E8C');
     let route = r || homeFor(role);
@@ -908,20 +984,23 @@ input[type=checkbox],input[type=radio]{width:18px;height:18px;accent-color:var(-
       app.innerHTML = content + standaloneSwitch();
     } else {
       const activeNav = page.nav || routeAlias[route] || route;
-      app.innerHTML = `<div class="topbar"><button class="btn sm" onclick="document.getElementById('side').classList.toggle('open')" aria-label="Menu">☰ Menu</button><div class="logo" style="width:30px;height:30px">A</div><strong>Angels PERSAL</strong></div>
+      const inst = window.Install && Install.available();
+      app.innerHTML = `<div class="topbar"><button class="btn sm" onclick="A.menu(true)" aria-label="Open menu">☰</button><div class="logo" style="width:30px;height:30px">A</div><strong style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(page.title || 'Angels PERSAL')}</strong>${inst ? `<button class="btn sm" onclick="Install.prompt()" aria-label="Install app">⬇ Install</button>` : ''}</div>
+        <div class="backdrop" id="backdrop" onclick="A.menu(false)"></div>
         <div class="shell">${sidebar(activeNav)}<main class="main" id="main">${content}</main></div>`;
     }
     document.title = (page.title || 'Angels PERSAL') + ' · Angels PERSAL';
     wireShell();
     if (page.after) page.after.apply(null, params);
+    labelTables();
     const m = document.getElementById('main'); if (m && !A._keepScroll) window.scrollTo(0, 0);
     A._keepScroll = false;
   }
   function standaloneSwitch() {
     const R = St.ROLES, cur = St.S.role;
-    return `<div style="position:fixed;left:14px;bottom:14px;z-index:30;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;box-shadow:0 6px 20px rgba(0,0,0,.08);font-size:12px">
+    return `<div class="roleswitch">
       <label style="font-weight:700;color:var(--muted)">Test role <select id="roleSel" class="in" style="margin-top:4px;padding:6px 8px;font-size:13px">${Object.keys(R).map(k => opt(k, R[k].label + ' · ' + R[k].name, k === cur)).join('')}</select></label>
-      ${R[cur].app === 'persal' ? `<div style="margin-top:6px"><a href="#/${homeFor(cur)}">← Back to PERSAL</a></div>` : ''}</div>`;
+      <div class="row" style="margin-top:6px;gap:10px">${R[cur].app === 'persal' ? `<a href="#/${homeFor(cur)}">← Back to PERSAL</a>` : ''}${window.Install && Install.available() ? `<button class="link" onclick="Install.prompt()">⬇ Install app</button>` : ''}</div></div>`;
   }
   function wireShell() {
     const sel = document.getElementById('roleSel');
@@ -940,7 +1019,16 @@ input[type=checkbox],input[type=radio]{width:18px;height:18px;accent-color:var(-
       };
       gs.onblur = () => setTimeout(() => gr.classList.add('hidden'), 200);
     }
-    document.querySelectorAll('.side a.nav').forEach(a => a.addEventListener('click', () => document.getElementById('side').classList.remove('open')));
+    document.querySelectorAll('.side a.nav').forEach(a => a.addEventListener('click', () => A.menu(false)));
+    labelTables();
+  }
+
+  /* Phone layout: each table cell gets its column name so rows can show as cards */
+  function labelTables() {
+    document.querySelectorAll('table.tbl').forEach(t => {
+      const heads = [...t.querySelectorAll('thead th')].map(th => th.textContent.trim());
+      t.querySelectorAll('tbody tr').forEach(tr => [...tr.children].forEach((td, i) => { if (heads[i] && !td.hasAttribute('colspan')) td.setAttribute('data-label', heads[i]); }));
+    });
   }
 
   /* ---------- shared page bits ---------- */
@@ -958,6 +1046,7 @@ input[type=checkbox],input[type=radio]{width:18px;height:18px;accent-color:var(-
   /* ---------- global actions ---------- */
   const A = window.A = {
     go, render,
+    menu(open) { const sd = document.getElementById('side'), bd = document.getElementById('backdrop'); if (sd) sd.classList.toggle('open', open); if (bd) bd.classList.toggle('on', open); document.body.style.overflow = open ? 'hidden' : ''; },
     refresh() { A._keepScroll = true; render(); },
     resetData() {
       modal('Reset demo data?', '<p style="margin:0">This removes every change you made while testing and loads the sample data again. It only affects this browser.</p>', [{ label: 'Cancel' }, { label: 'Reset', cls: 'bad', onClick: () => { St.reset(); toast('Demo data reset', 'ok'); go(homeFor(St.S.role)); render(); } }]);
@@ -2681,12 +2770,43 @@ input[type=checkbox],input[type=radio]{width:18px;height:18px;accent-color:var(-
 
 </script>
 <script>/* js/app.js */
-/* Angels PERSAL — start-up */
+/* Angels PERSAL — start-up, installable app (PWA) support */
 (function () {
   Store.load();
   window.addEventListener('hashchange', () => UI.render());
   window.addEventListener('storage', e => { if (e.key === 'angels-persal-v1') { Store.load(); UI.render(); } });
   if (!location.hash) history.replaceState(null, '', '#/' + UI.homeFor(Store.S.role));
+
+  /* ---------- install as an app ---------- */
+  const ua = navigator.userAgent;
+  const isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const standalone = () => window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  let deferred = null;
+  window.Install = {
+    available: () => !standalone(),
+    installed: standalone,
+    async prompt() {
+      if (deferred) {
+        deferred.prompt();
+        const r = await deferred.userChoice; deferred = null;
+        if (r.outcome === 'accepted') UI.toast('Angels PERSAL is being installed', 'ok');
+        UI.render(); return;
+      }
+      const steps = isIOS
+        ? '<ol style="margin:0;padding-left:20px;line-height:1.8"><li>Open this page in <strong>Safari</strong>.</li><li>Tap the <strong>Share</strong> button (square with an arrow).</li><li>Tap <strong>Add to Home Screen</strong>, then <strong>Add</strong>.</li></ol>'
+        : /Android/.test(ua)
+          ? '<ol style="margin:0;padding-left:20px;line-height:1.8"><li>Open this page in <strong>Chrome</strong>.</li><li>Tap the <strong>⋮</strong> menu (top right).</li><li>Tap <strong>Install app</strong> or <strong>Add to Home screen</strong>.</li></ol>'
+          : '<ol style="margin:0;padding-left:20px;line-height:1.8"><li>Open this page in <strong>Chrome</strong> or <strong>Edge</strong>.</li><li>Click the <strong>install icon</strong> at the right of the address bar (a screen with a down arrow), or open the browser menu → <strong>Install Angels PERSAL</strong> / <strong>Apps → Install this site as an app</strong>.</li></ol>';
+      UI.modal('Install Angels PERSAL', `<p style="margin:0">Add the app to your home screen or desktop. It opens in its own window, works full-screen on phones and tablets, and keeps working without signal.</p>${steps}<p class="small muted" style="margin:0">The app needs to be opened from the web address (https), not from a file on your computer.</p>`);
+    }
+  };
+  window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferred = e; UI.render(); });
+  window.addEventListener('appinstalled', () => { deferred = null; UI.toast('Installed — find Angels PERSAL on your home screen', 'ok'); UI.render(); });
+
+  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+    navigator.serviceWorker.register('sw.js').catch(() => { /* offline support unavailable */ });
+  }
+
   UI.render();
 })();
 
